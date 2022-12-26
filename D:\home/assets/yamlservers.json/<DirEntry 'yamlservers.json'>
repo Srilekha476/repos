@@ -1,0 +1,50 @@
+{
+    "projects": [
+        {
+            "projectName": "chatbot",
+            "sub": [
+                {
+                    "subName": "chatbotdev",
+                    "value": {
+                        "host": "gcpcosappcbbot01dev",
+                        "port": "8888",
+                        "path": "/u01/apps/config/chatbot/controller/",
+                        "viewYamlendpoint": "edit/config",
+                        "saveYamlendpoint": "save/yaml",
+                        "listYamlendpoint": "list_files_dir",
+                        "url": "https://csbotdev.cswg.com/bot/"
+                    }
+                },
+                {
+                    "subName": "chatbotpoc",
+                    "value": {
+                        "host": "gcpcosappbot01poc",
+                        "port": "8888",
+                        "path": "/utl/chatbot/",
+                        "viewYamlendpoint": "edit/config",
+                        "saveYamlendpoint": "save/yaml",
+                        "listYamlendpoint": "list_files_dir",
+                        "url": "https://csbotpoc.cswg.com/bot/"
+                    }
+                }
+            ]
+        },
+        {
+            "projectName": "dpl",
+            "sub": [],
+            "value": {
+                "host": "ednoeldplap701d",
+                "port": "5029",
+                "path": "/u01/apps/config/dplui/pivot_configuration/defaultview/",
+                "viewYamlendpoint": "edit/config",
+                "listYamlendpoint": "list_files_dir",
+                "saveYamlendpoint": "save/yaml",
+                "url": "http://ednoeldplap701d.cswg.com:5029/dplui/"
+            }
+        }
+    ],
+    "serverHost": "https://csbotdev.cswg.com/bot/",
+    "dataviz": true,
+    "portalViz": true,
+    "appViz": true
+}

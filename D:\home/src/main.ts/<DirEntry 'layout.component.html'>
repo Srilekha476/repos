@@ -1,0 +1,216 @@
+<div class="container-fluid" *ngIf="this.previewData?.menuType?.name === 'TopMenu'">
+      <div class="col-sm-12 p-0  preview-card" style="height: calc(100vh - 115px); background: #f2f2f2">
+        <div class="row m-0 imageDiv"
+          [ngStyle]="{'background-image': 'url(' + this.previewData?.headerBg + ')','background-color': this.previewData.headerColor !== undefined && this.previewData.headerColor !== '' ? this.previewData.headerColor : ''}">
+          
+          <div class="col-sm-12 headerDiv row m-0"
+            >
+            <div class="col-sm-2 p-2 margin-auto text-center">
+              <img [src]="this.previewData?.appLogo" class="appLogoImg img-fluid">
+            </div>
+            <div class="col-sm-9 mx-0 my-auto">
+              <h4 class="mb-0 ScreenTitle"
+                [ngStyle]="{'color': this.previewData.menuItemColor !== undefined && this.previewData.menuItemColor !== '' ? this.previewData.menuItemColor : '#fff'}">
+                {{this.previewData?.appHeading}}</h4>
+            </div>
+    
+            <div class="col-sm-1 p-0  mx-0 my-auto text-center">
+              <i class="fas fa-user-circle headerIcons"
+                title="{{this.previewData?.userData?.user_name | uppercase}}"></i>
+            </div>
+          </div>
+          <div class="row m-0 px-3">
+            <div class="col-sm-12 ps-2 mb-1 headerCard">
+              <nav class="navbar navbar-expand-lg navbar-expand-md navbar-expand-sm p-0 nav-card">
+                <div class="container-fluid p-0">
+                  <div class="collapse navbar-collapse " id="navbarSupportedContent" style="margin: 0.75%;"
+                    *ngIf="this.previewData.menuData.length > 1 || this.previewData.menuData.length == 1">
+    
+                    <ul class="navbar-nav m-1" *ngFor="let m of this.previewData.menuData; let i = index">
+    
+                      <!-- Widget does not contain children -->
+                      <li class="mx-1" *ngIf="m.children.length === 0" (mouseover)="ShowRedIcons(m, '')"
+                        (mouseleave)="showGreyIcons()">
+                        <a class="hrefColor" routerLinkActive="selected-menu-bg"
+                          (click)="getScreenData(m)"
+                          [ngClass]="m.screenTitle === selectedParentMenu ? 'selected-menu-bg' : 'unselected-menu-bg'">
+    
+                          &nbsp;
+                          <span class="">
+                            {{m.screenTitle | uppercase}}
+                          </span>
+                        </a>
+                      </li>
+    
+                      <!-- Widget contain children -->
+    
+                      <li class="dropdown mx-1" *ngIf="m.children.length > 0 " (mouseover)="ShowRedIcons(m, '')"
+                        (mouseleave)="showGreyIcons()">
+                        <a class="dropdown hrefColor" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" routerLinkActive="selected-sub-menu-bg" [ngClass]="m.screenTitle === selectedParentMenu || m.screenTitle === getSelectedMenuFromRoute(m.screenTitle)
+                              ? 'selected-menu-bg' : 'unselected-menu-bg'">
+    
+                          <span class="hoverable-menu">
+                            {{m.screenTitle | uppercase}}&nbsp;
+                            <i class="{{menuDropDownIcon}}" style="font-size: 14px; color: #dc3545; font-weight: bold"></i>
+                          </span>
+                        </a>
+    
+                        <!-- Widget children -->
+    
+                        <div class="menuList dropdown-menu ">
+                          <span *ngFor="let c of m.children">
+                            
+                            <!-- Widget does not contain children -->
+                      <li class="mx-1" *ngIf="c.children.length === 0" (mouseover)="ShowRedIcons(c, '')"
+                      (mouseleave)="showGreyIcons()">
+                      <a class="hrefColor" routerLinkActive="selected-menu-bg"
+                        (click)="getScreenData(c)"
+                        [ngClass]="c.screenTitle === selectedParentMenu ? 'selected-menu-bg' : 'unselected-menu-bg'">
+    
+                        &nbsp;
+                        <span class="">
+                          {{c.screenTitle | uppercase}}
+                        </span>
+                      </a>
+                    </li>
+    
+                    <!-- Widget contain children -->
+    
+                    <li class="dropdown mx-1" *ngIf="c.children.length > 0 " (mouseover)="ShowRedIcons(c, '')"
+                      (mouseleave)="showGreyIcons()">
+                      <a class="dropdown hrefColor" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" routerLinkActive="selected-sub-menu-bg" [ngClass]="c.screenTitle === selectedParentMenu || c.screenTitle === getSelectedMenuFromRoute(m.screenTitle)
+                            ? 'selected-menu-bg' : 'unselected-menu-bg'">
+    
+                        <span class="hoverable-menu">
+                          {{c.screenTitle | uppercase}}&nbsp;
+                          <i class="{{menuDropDownRightIcon}}" style="font-size: 14px; color: #dc3545; font-weight: bold"></i>
+                        </span>
+                      </a>
+    
+                      <!-- Widget children -->
+    
+                      <div class="menuList dropdown-menu ">
+                        <span *ngFor="let sc of c.children">
+                          
+                          <a class="dropdown-item" (mouseover)="selectedParentMenu=sc.screenTitle"
+                            (mouseleave)="showGreyIcons()" (mouseout)="selectedParentMenu=''"
+                            routerLinkActive="selected-sub-menu-bg" (click)="getScreenData(sc)"
+                            >
+                            {{sc.screenTitle}}
+                          </a>
+                        </span>
+                      </div>
+                    </li>
+    
+                            <!-- <a class="dropdown-item" (mouseover)="selectedParentMenu=m.screenTitle"
+                              (mouseleave)="showGreyIcons()" (mouseout)="selectedParentMenu=''"
+                              routerLinkActive="selected-sub-menu-bg" (click)="getScreenData(c)"
+                              >
+                              {{c.screenTitle}}
+                            </a> -->
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+    
+                  </div>
+    
+                  <div class="collapse navbar-collapse m-3" id="navbarSupportedContent"
+                    *ngIf="this.previewData.menuData.length < 1">
+                    <div style="padding: 0.75%;">
+    
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-sm-12 p-0 row mx-0 preview-card" style="height: calc(100vh - 255px); overflow: auto;"
+          [ngStyle]="{'background-color': this.previewData.bgColor !== undefined && this.previewData.bgColor !== '' ? this.previewData.bgColor : '#f2f2f2'}">
+          <div class="row mx-0 p-0 preview-card">
+            <div class="col-sm-{{screenSize}} offset-sm-{{offsetSize}} editor-card  my-0">
+              <!-- Desktop preview -->
+              <div class="previewDiv mt-2">
+                <div class="row m-0 pt-5">
+                  <p class="mb-0 ps-3 ScreenTitle">
+                    {{screenTitle}}
+                  </p>
+                </div>
+                <!-- <div class="row m-0"> -->
+                <div class="col-sm-12 row m-0 px-0 pt-2 ">
+                  <div *ngFor="let screen of this.screenData; let idx = index;"
+                    class="col-sm-{{screen.rowsize}} p-0 row m-0">
+                    <div class="col-sm-12 mt-2 p-0">
+                      <div class="field px-2" *ngFor="let item of screen?.attributes || []; let subIdx = index;">
+    
+                        <div class="col-sm-12 ps-2 pr-0">
+                          <app-basics [basicType]="item.subtype" [basicData]="rowData[idx]"></app-basics>
+                        </div>
+    
+                        <div class="col-sm-12 ps-2 pr-0" *ngIf="item.type === 'chart'">
+                          <app-charts [chartType]="item.subtype" [chartData]="rowData[idx]">
+                          </app-charts>
+                        </div>
+    
+                        <div class="col-sm-12 ps-2 pr-0" *ngIf="item.type === 'grid'">
+                          <app-grid [gridType]="item.subtype" [gridData]="rowData[idx]">
+                          </app-grid>
+                        </div>
+    
+                        <div class="col-sm-12 ps-2 pr-0" *ngIf="item.type === 'dropdown'">
+                          <app-dropdown [dropdownType]="item.subtype" [dropdownData]="rowData[idx]"
+                            [bindingColumn]="uiBindingColumn[idx]">
+                          </app-dropdown>
+                        </div>
+    
+                        <div class="col-sm-12 ps-2 pr-0" *ngIf="item.type === 'datepicker'">
+                          <app-datepicker [datepickerType]="item.subtype" [calenderData]="rowData[idx]"
+                            [bindingColumn]="uiBindingColumn[idx]"></app-datepicker>
+                        </div>
+                        <div class="col-sm-12 p-3" *ngIf="item.type === 'input'">
+                                            <app-inputs [inputType]="item.subtype" [inputLabel]="item.label"
+                                            [inputData]="rowData[idx]" [inputStyles]="uiStyles[idx]">
+                                            </app-inputs>
+                                        </div>
+
+                                        <div class="col-sm-12 p-3" *ngIf="item.type === 'media'">
+                                            <app-media [mediaType]="item.subtype" [mediaData]="rowData[idx]">
+                                            </app-media>
+                                        </div>
+
+                                        <div class="col-sm-12 p-3" *ngIf="item.type === 'workflow'">
+                                            <app-workflow [workFlowType]="item"  [workFlowData]="rowData[idx]"></app-workflow>
+                                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+              <!-- Desktop preview -->
+    
+              <!-- Tablet preview -->
+    
+              <!-- Tablet preview -->
+    
+    
+    
+            </div>
+          </div>
+    
+    
+        </div>
+      </div>
+    
+      <footer class="footer-content p-0"
+        [ngStyle]="{'background-color': this.previewData.footerBgColor !== undefined && this.previewData.footerBgColor !== '' ? this.previewData.footerBgColor : '#000'}"
+        *ngIf="this.previewData?.appFooter !== undefined && this.previewData?.appFooter !== null && this.previewData?.appFooter !== ''">
+        <p class="mb-1 p-1"
+          [ngStyle]="{'color': this.previewData.footerColor !== undefined && this.previewData.footerColor !== '' ? this.previewData.footerColor : '#fff'}">
+          &#169; {{this.previewData?.appFooter}}</p>
+      </footer>
+                        </div>

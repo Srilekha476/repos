@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ErrorService } from './error.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+
+  constructor(private http: HttpClient, private err: ErrorService) { }
+
+  postMethod(url: string, body: any): Observable<any> {
+    return this.http.post(url, body).pipe(catchError(this.err.handleError));
+  }
+
+  getMethod(url: string, body: any): Observable<any> {
+    if (body !== '' && body !== undefined && body !== null ) {
+      return this.http.get(url + '/' + body).pipe(catchError(this.err.handleError));
+    } else {
+      return this.http.get(url).pipe(catchError(this.err.handleError));
+    }
+  }
+
+}

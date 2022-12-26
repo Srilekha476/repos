@@ -1,0 +1,51 @@
+<div class="row m-0">
+<div class="col-sm-12 p-0">
+<p class="field-label">{{bindingValue1}}</p>
+                <input type="email" placeholder="Email" class="field-value" [formControl]="screenData1" [email]="true"
+                (focusin)="showSuggestions1 = true" />
+                <div class="col-sm-12 p-0" *ngIf="showSuggestions1" >
+                   <div *ngIf="!screenData1.hasError('required') && screenData1.hasError('pattern')">
+                       <p class="mb-0 warning-msg pl-2 pt-1">Please enter valid email address</p> 
+                   </div>
+               </div>
+</div>
+<div class="col-sm-12 p-0">
+ <p class="field-label">{{bindingValue2}}</p>
+                <p-password [(ngModel)]="screenData2" autocomplete="cc-password" [toggleMask]="true">
+                   <ng-template pTemplate="header">
+                       <h6 class="pwd-header">Pick a password</h6>
+                   </ng-template>
+                   <ng-template pTemplate="footer">
+                       <p-divider></p-divider>
+                       <p class="mt-2 mb-2 pwd-header">Suggestions</p>
+                       <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                           <li class="pwd-msg">At least one lowercase</li>
+                           <li class="pwd-msg">At least one uppercase</li>
+                           <li class="pwd-msg">At least one numeric</li>
+                           <li class="pwd-msg">Minimum 8 characters</li>
+                       </ul>
+                   </ng-template>
+               </p-password>
+</div>
+<div class="col-sm-12 p-0">
+<p-dropdown [options]="screenData3" [(ngModel)]="bindingValue3" optionLabel="valueToDisplay"></p-dropdown>
+</div>
+<div class="col-sm-12 p-0">
+<p class="field-label">{{bindingValue4}}</p>
+                <p-inputMask mask="(999) 999-9999" [(ngModel)]="screenData4" placeholder="Mobile number" autocomplete="cc-phone"
+                   [value]="inputData[0]">
+                </p-inputMask>
+</div>
+<div class="col-sm-12 p-0">
+<p-calendar [(ngModel)]="bindingValue5" [minDate]="minDate" [maxDate]="maxDate" [readonlyInput]="true" inputId="min-max"></p-calendar>
+</div>
+<div class="col-sm-12 p-0">
+<p-dropdown [options]="screenData6" [(ngModel)]="bindingValue6" optionLabel="valueToDisplay"></p-dropdown>
+</div>
+<div class="col-sm-12 p-0">
+  <p-calendar [(ngModel)]="multipledates" (onSelect)="changeDate($event)" selectionMode="multiple" [readonlyInput]="true" inputId="multiple" [minDate]="minDate" [maxDate]="maxDate"></p-calendar>
+</div>
+<div class="col-sm-12 p-0">
+   <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="inputData[0]" type="text"></textarea>
+</div>
+</div>

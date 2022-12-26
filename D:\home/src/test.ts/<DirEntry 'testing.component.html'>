@@ -1,0 +1,5 @@
+<div class="row m-0">
+<div class="col-sm-12 p-0">
+<p-chart type="bar" [data]="screenData1" [options]="verticalBarChartOptions1"></p-chart>
+</div>
+</div>

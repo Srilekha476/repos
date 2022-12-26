@@ -1,0 +1,40 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ErrorService {
+
+  constructor() { }
+
+  public handleError(err: HttpErrorResponse): Observable<any> {
+    let errorMessage = '';
+    if (err.error instanceof Error) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+      if (err.status === 0) {
+        errorMessage = `Unable to reach the server(${err.status}). Please try again later.`;
+      } else if (err.status === 401) {
+        errorMessage = `Your session is expired! Please login(${err.status})`;
+      } else if (err.status === 500 || err.status === 405) {
+        errorMessage = `Unable to complete request(${err.status}). Please try again later.`;
+      } else if (err.status === 404 || err.status === 204 || err.status === 200) {
+        errorMessage = `No data found for this request(${err.status})`;
+      } else if (err.status === 400) {
+        errorMessage = `Unable to reach the server(${err.status}). Please try again later.`;
+      } else if (err.status === 415 || err.status === 429) {
+        errorMessage = `Server refuses to accept the request(${err.status}). Please try again later.`;
+      } else if (err.status === 409) {
+        errorMessage = err.error.response;
+      } else {
+        errorMessage = `Unable to reach the server(${err.status}). Please try again later.`;
+      }
+    }
+    // console.error(errorMessage);
+    return throwError(errorMessage);
+  }
+}
+
+
